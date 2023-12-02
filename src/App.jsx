@@ -1,63 +1,51 @@
-// import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
-import './App.css';
+import "./App.css";
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Link,
+    Route,
+    Routes,
+} from "react-router-dom";
+//pages
+import Home from "./pages/Home";
+import Day01 from "./pages/01/01";
 
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import Day01 from './pages/01/01';
+// 3️⃣ Router singleton created
+const router = createBrowserRouter([{ path: "*", Component: Root }]);
 
-function App() {
-    // const [count, setCount] = useState(0);
-
-    //   return (
-    //     <>
-    //       <div>
-    //         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-    //           <img src={viteLogo} className="logo" alt="Vite logo" />
-    //         </a>
-    //         <a href="https://react.dev" target="_blank" rel="noreferrer">
-    //           <img src={reactLogo} className="logo react" alt="React logo" />
-    //         </a>
-    //       </div>
-    //       <h1>Vite + React</h1>
-    //       <div className="card">
-    //         <button onClick={() => setCount((count) => count + 1)}>
-    //           count is {count}
-    //         </button>
-    //         <p>
-    //           Edit <code>src/App.jsx</code> and save to test HMR
-    //         </p>
-    //       </div>
-    //       <p className="read-the-docs">
-    //         Click on the Vite and React logos to learn more
-    //       </p>
-    //     </>
-    //   )
-
-    return (
-        <BrowserRouter>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to='/'>Home</Link>
-                    </li>
-                    <li>
-                        <Link to='/01'>Day 01</Link>
-                    </li>
-                    <li>
-                        <Link to='/02'>Day 02</Link>
-                    </li>
-                </ul>
-            </nav>
-
-            <Routes>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/01" component={Day01} />
-                {/* <Route path="/contact" component={ContactPage} /> */}
-            </Routes>
-        </BrowserRouter>
-    );
+// 4️⃣ RouterProvider added
+export default function App() {
+    return <RouterProvider router={router} />;
 }
 
-export default App;
+export function Root() {
+    return (
+        <main className="min-w-screen flex min-h-screen flex-grow flex-row">
+            <nav className="flex min-h-screen w-[15%] flex-col bg-slate-600">
+                <ul>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/01">Day 01</Link>
+                    </li>
+                    <li>{/* <Link to='/02'>Day 02</Link> */}</li>
+                </ul>
+            </nav>
+            <section className="flex flex-grow flex-col bg-slate-300">
+                {/* <header className='flex h-12 bg-orange-300'>
+                    <h1>Advent of Code 2023</h1>
+                </header> */}
+                <article className="margin-4 flex flex-grow">
+                    <Routes>
+                        <Route exact path="/" element={<Home />} />
+                        <Route path="/01" element={<Day01 />} />
+                    </Routes>
+                </article>
+                {/* <footer className='flex h-12 bg-blue-300'>
+                    <p>Created by <a href="lavrenov.io">lavrenov.io</a></p>
+                </footer> */}
+            </section>
+        </main>
+    );
+}
