@@ -1,31 +1,31 @@
 import './App.css';
-import {
-    createBrowserRouter,
-    RouterProvider,
-    Link,
-    Route,
-    Routes,
-} from 'react-router-dom';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 //routes
 import Home from './routes/Home';
-import Day01 from './routes/01/content';
+import Day01 from './routes/days/01/01';
+//highlight
+import hljs from 'highlight.js/lib/core';
+import 'highlight.js/styles/default.css';
+import javascript from 'highlight.js/lib/languages/javascript';
+// Then register the languages you need
+hljs.registerLanguage('javascript', javascript);
 
-// 3️⃣ Router singleton created
-const router = createBrowserRouter([{ path: '*', Component: Root }]);
-
-// 4️⃣ RouterProvider added
 export default function App() {
-    return <RouterProvider router={router} />;
+    return (
+        <BrowserRouter basename="/adventofcode/2023/">
+            <Root />
+        </BrowserRouter>
+    );
 }
 
 export function Root() {
     return (
         <main className="min-w-screen flex min-h-screen flex-grow flex-row">
-            <section className="flex min-h-screen w-[15%] flex-col bg-slate-600">
+            <section className="fixed flex min-h-screen min-w-[15%] flex-col bg-slate-600">
                 <header className="flex bg-orange-300">
-                    <h1 className="m-4 w-full text-center">
+                    <p className="m-4 w-full text-center">
                         Advent of Code 2023
-                    </h1>
+                    </p>
                 </header>
                 <nav className="m-4 flex flex-grow">
                     <ul>
@@ -38,13 +38,13 @@ export function Root() {
                         <li>{/* <Link to='/02'>Day 02</Link> */}</li>
                     </ul>
                 </nav>
-                <footer className="flex h-12 bg-blue-300">
-                    <p>
+                <footer className="flex bg-blue-300">
+                    <p className="m-4 w-full text-center">
                         Created by <a href="lavrenov.io">lavrenov.io</a>
                     </p>
                 </footer>
             </section>
-            <section className="flex flex-grow flex-col bg-slate-300">
+            <section className="ml-[15%] flex flex-grow flex-col bg-slate-300">
                 <article className="m-4 flex  flex-grow">
                     <Routes>
                         <Route exact path="/" element={<Home />} />

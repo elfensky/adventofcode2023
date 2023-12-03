@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const Day01 = () => {
+const Answer = () => {
     const [data, setData] = useState([]);
     const [numbers, setNumers] = useState([]);
     const [values, setValues] = useState([]);
@@ -8,7 +8,7 @@ const Day01 = () => {
 
     //get file
     useEffect(() => {
-        fetch('/01.txt')
+        fetch('days/01/data.txt')
             .then((response) => response.text())
             .then((contents) => {
                 //split string by 'newline' into array of lines
@@ -81,12 +81,10 @@ const Day01 = () => {
     }, [values]);
 
     return (
-        <div>
-            <h1>DAY1</h1>
-            <p>Answer: {answer}</p>
-            {/* Your component JSX */}
-        </div>
+        <>
+            <h3>Answer: {answer}</h3>
+        </>
     );
 };
 
-export default Day01;
+export default Answer;
