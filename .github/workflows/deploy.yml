@@ -30,5 +30,6 @@ jobs:
                   host: ${{ secrets.SERVER_HOST }}
                   username: ${{ secrets.SERVER_USERNAME }}
                   key: ${{ secrets.SERVER_PRIVATE_KEY }}
+                  port: ${{ secrets.SERVER_PORT }}
                   script: |
                       rsync -avz --delete dist/ ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/www/lavrenov.io/root/production/adventofcode/2023
