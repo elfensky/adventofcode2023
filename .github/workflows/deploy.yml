@@ -23,8 +23,10 @@ jobs:
 
             # - name: Build
             #   run: npm run build
+            - name: Clear known_hosts file
+              run: ssh-keygen -R ${{ secrets.SERVER_HOST }}
 
-            - name: Set up SSH ke/home/andrei
+            - name: Set up SSH key
               uses: webfactory/ssh-agent@v0.8.0
               with:
                   ssh-private-key: ${{ secrets.SERVER_PRIVATE_KEY }}
