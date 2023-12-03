@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
     push:
         branches:
-            - main
+            - master
 
 jobs:
     deploy:
@@ -24,12 +24,30 @@ jobs:
             - name: Build
               run: npm run build
 
-            - name: Deploy to server
-              uses: appleboy/ssh-action@master
+            - name: Set up SSH key
+              uses: webfactory/ssh-agent@v0.5.0
               with:
-                  host: ${{ secrets.SERVER_HOST }}
-                  username: ${{ secrets.SERVER_USERNAME }}
-                  key: ${{ secrets.SERVER_PRIVATE_KEY }}
-                  port: ${{ secrets.SERVER_PORT }}
-                  script: |
-                      rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_PORT }} -i '${{ secrets.SERVER_PRIVATE_KEY }}'" dist/ ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/www/lavrenov.io/root/production/adventofcode/2023
+                  ssh-private-key: ${{ secrets.SERVER_PRIVATE_KEY }}
+
+            - name: Copy files to remote server
+              run: |
+                  scp -r -P ${{ secrets.SERVER_PORT }} /dist/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/www/lavrenov.io/root/production/adventofcode/2023
+
+            # - name: Add SSH keys
+            #   run: |
+            #       install -m 600 -D /dev/null ~/.ssh/id_rsa
+            #       echo "${{ secrets.SERVER_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            #       ssh-keyscan -H ${{ secrets.SERVER_HOST }} > ~/.ssh/known_hosts
+
+            # - name: Copy to server
+            #   run: ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && exit"
+
+        # - name: Deploy to server
+        #   uses: appleboy/ssh-action@master
+        #   with:
+        #       host: ${{ secrets.SERVER_HOST }}
+        #       username: ${{ secrets.SERVER_USERNAME }}
+        #       key: ${{ secrets.SERVER_PRIVATE_KEY }}
+        #       port: ${{ secrets.SERVER_PORT }}
+        #       script: |
+        #           rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_PORT }} -i '${{ secrets.SERVER_PRIVATE_KEY }}'" dist/ ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/www/lavrenov.io/root/production/adventofcode/2023
