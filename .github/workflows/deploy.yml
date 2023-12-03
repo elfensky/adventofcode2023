@@ -10,28 +10,30 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+            # - name: Checkout code
+            #   uses: actions/checkout@v2
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 18
+            # - name: Set up Node.js
+            #   uses: actions/setup-node@v2
+            #   with:
+            #       node-version: 18
 
-            - name: Install dependencies
-              run: npm ci
+            # - name: Install dependencies
+            #   run: npm ci
 
-            - name: Build
-              run: npm run build
+            # - name: Build
+            #   run: npm run build
 
-            - name: Set up SSH key
-              uses: webfactory/ssh-agent@v0.5.0
+            - name: Set up SSH ke/home/andrei
+              uses: webfactory/ssh-agent@v0.8.0
               with:
                   ssh-private-key: ${{ secrets.SERVER_PRIVATE_KEY }}
 
             - name: Copy files to remote server
               run: |
-                  scp -r -P ${{ secrets.SERVER_PORT }} /dist/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/www/lavrenov.io/root/production/adventofcode/2023
+                  ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "ls -all"
+
+            # scp -r -P ${{ secrets.SERVER_PORT }} /dist/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/home/andrei/www/lavrenov.io/root/production/adventofcode/2023
 
             # - name: Add SSH keys
             #   run: |
