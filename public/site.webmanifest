@@ -1,0 +1,14 @@
+{
+    "name": "Advent of Code",
+    "short_name": "Advent of Code",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#0f0f23",
+    "background_color": "#0f0f23",
+    "display": "standalone"
+}
