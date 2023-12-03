@@ -1,25 +1,89 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Day01 = () => {
-    // useEffect(() => {
-    //     fetch('/assets/01.txt')
-    //         .then(response => response.text())
-    //         .then(contents => {
-    //             parseTextFile(contents);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching file:', error);
-    //         });
-    // }, []);
+    const [data, setData] = useState([]);
+    const [numbers, setNumers] = useState([]);
+    const [values, setValues] = useState([]);
+    const [answer, setAnswer] = useState(0);
 
-    // const parseTextFile = (contents) => {
-    // // Parse the contents of the text file here
-    //     console.log(contents);
-    // };
+    //get file
+    useEffect(() => {
+        fetch('/01.txt')
+            .then((response) => response.text())
+            .then((contents) => {
+                //split string by 'newline' into array of lines
+                setData(contents.split('\n'));
+            })
+            .catch((error) => {
+                console.error('Error fetching file:', error);
+            });
+    }, []);
+
+    //extract numbers
+    useEffect(() => {
+        function extractNumbers(data) {
+            const result = data.map((line) => {
+                return line.match(/\d/g);
+            });
+            setNumers(result);
+
+            // for (let index = 0; index < 5; index++) {
+            //     console.log(data[index], array[index]);
+            // }
+
+            //
+        }
+
+        if (data.length !== 0) {
+            extractNumbers(data);
+        }
+    }, [data]);
+
+    //generate the special values for each line
+    useEffect(() => {
+        function combineNumbers(numbers) {
+            const values = numbers.map((line) => {
+                if (line === null) {
+                    return null;
+                } else if (line.length === 1) {
+                    return `${line[0]}${line[0]}`;
+                } else {
+                    const firstItem = line[0];
+                    const lastItem = line[line.length - 1];
+                    return `${firstItem}${lastItem}`;
+                }
+            });
+            setValues(values);
+        }
+
+        if (numbers.length !== 0) {
+            combineNumbers(numbers);
+        }
+    }, [numbers]);
+
+    //calculate the answer
+    useEffect(() => {
+        function calculateAnswer(values) {
+            let result = 0;
+            values.forEach((value) => {
+                if (value === null) {
+                    return;
+                } else {
+                    result += parseInt(value);
+                }
+            });
+            setAnswer(result);
+        }
+
+        if (values.length !== 0) {
+            calculateAnswer(values);
+        }
+    }, [values]);
 
     return (
         <div>
             <h1>DAY1</h1>
+            <p>Answer: {answer}</p>
             {/* Your component JSX */}
         </div>
     );
