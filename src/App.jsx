@@ -1,14 +1,9 @@
 import './App.css';
+
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 //routes
 import Home from './routes/Home';
 import Day01 from './routes/days/01/01';
-//highlight
-import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/default.css';
-import javascript from 'highlight.js/lib/languages/javascript';
-// Then register the languages you need
-hljs.registerLanguage('javascript', javascript);
 
 export default function App() {
     return (
@@ -45,7 +40,7 @@ export function Root() {
                 </footer>
             </section>
             <section className="ml-[15%] flex flex-grow flex-col bg-slate-300">
-                <article className="m-4 flex  flex-grow">
+                <article className="mx-auto my-8 flex min-w-[300px] max-w-[500px] flex-grow">
                     <Routes>
                         <Route exact path="/" element={<Home />} />
                         <Route path="/01" element={<Day01 />} />

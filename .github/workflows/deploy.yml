@@ -32,4 +32,4 @@ jobs:
                   key: ${{ secrets.SERVER_PRIVATE_KEY }}
                   port: ${{ secrets.SERVER_PORT }}
                   script: |
-                      rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_PORT }} -i ${{ secrets.SERVER_PRIVATE_KEY }}" dist/ ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/www/lavrenov.io/root/production/adventofcode/2023
+                      rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_PORT }} -i '${{ secrets.SERVER_PRIVATE_KEY }}'" dist/ ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/www/lavrenov.io/root/production/adventofcode/2023

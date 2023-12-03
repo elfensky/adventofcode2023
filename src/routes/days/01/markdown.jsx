@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
 import Markdown from 'react-markdown';
+//highlight
+// import 'highlight.js/styles/default.css'; // Import the CSS style
+import 'highlight.js/styles/monokai-sublime.min.css';
+
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+// Then register the languages you need
+hljs.registerLanguage('javascript', javascript);
 
 const Content = () => {
     const [question, setQuestion] = useState('');
@@ -26,10 +34,14 @@ const Content = () => {
             });
     }, []);
 
+    useEffect(() => {
+        hljs.highlightAll(); // Initialize Highlight.js
+    }, [question, solution]);
+
     return (
         <>
             <Markdown>{question}</Markdown>
-            <Markdown>{solution}</Markdown>
+            <Markdown className="space-y-4">{solution}</Markdown>
         </>
     );
 };
