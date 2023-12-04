@@ -1,6 +1,6 @@
 //MARKDOWN
 import { useState, useEffect } from 'react';
-import Content from '../../../components/markdown'; // markdown
+import Content from '../../../components/Markdown'; // markdown
 
 const Day01Part01 = () => {
     return (
