@@ -1,5 +1,21 @@
+//MARKDOWN
 import { useState, useEffect } from 'react';
+import Content from '../../../components/markdown'; // markdown
 
+const Day01Part01 = () => {
+    return (
+        <section className="w-full flex-grow overflow-auto rounded-md bg-gray-50 p-4 dark:bg-gray-800">
+            <Content
+                questionURL="days/01/question2.md"
+                solutionURL="days/01/solution2.md"
+            />
+            <Answer />
+        </section>
+    );
+};
+export default Day01Part01;
+
+//ANSWER
 const Answer = () => {
     const [data, setData] = useState([]);
     const [numbers, setNumers] = useState([]);
@@ -86,5 +102,3 @@ const Answer = () => {
         </>
     );
 };
-
-export default Answer;

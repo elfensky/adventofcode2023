@@ -9,13 +9,13 @@ import javascript from 'highlight.js/lib/languages/javascript';
 // Then register the languages you need
 hljs.registerLanguage('javascript', javascript);
 
-const Content = () => {
+const Content = ({ questionURL, solutionURL }) => {
     const [question, setQuestion] = useState('');
     const [solution, setSolution] = useState('');
 
     //get markdown files
     useEffect(() => {
-        fetch('days/01/question.md')
+        fetch(questionURL)
             .then((response) => response.text())
             .then((contents) => {
                 setQuestion(contents);
@@ -24,7 +24,7 @@ const Content = () => {
                 console.error('Error fetching file:', error);
             });
 
-        fetch('days/01/solution.md')
+        fetch(solutionURL)
             .then((response) => response.text())
             .then((contents) => {
                 setSolution(contents);

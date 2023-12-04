@@ -1,12 +1,12 @@
-import Content from './markdown';
-import Answer from './answer';
+import Day01Part01 from './part01';
+import Day01Part02 from './part02';
 
 const Day01 = () => {
     return (
-        <div className="flex flex-col">
-            <Content />
-            <Answer />
-        </div>
+        <>
+            <Day01Part01 />
+            <Day01Part02 />
+        </>
     );
 };
 
