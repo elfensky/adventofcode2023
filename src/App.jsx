@@ -1,7 +1,8 @@
 import './App.css';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+//flowbite
+import { Flowbite } from 'flowbite-react';
 //components
 import Navigation from './components/Navigation';
 import Toggle from './components/Toggle';
@@ -11,9 +12,11 @@ import Day01 from './routes/days/01/01';
 
 export default function App() {
     return (
-        <BrowserRouter basename="/adventofcode/2023/">
-            <Content />
-        </BrowserRouter>
+        <Flowbite>
+            <BrowserRouter basename="/adventofcode/2023/">
+                <Content />
+            </BrowserRouter>
+        </Flowbite>
     );
 }
 
@@ -27,7 +30,6 @@ export function Content() {
             <section
                 id="content"
                 className="flex flex-col space-y-4 overflow-auto rounded-md text-gray-900 dark:text-white lg:flex-row lg:space-x-4 lg:space-y-0"
-                // style={ContentStyle}
                 data-nav={nav}
             >
                 <Routes>

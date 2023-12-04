@@ -18,6 +18,7 @@ export default Day01Part01;
 //ANSWER
 const Answer = () => {
     const [data, setData] = useState([]);
+    const [correct, setCorrect] = useState([]);
     const [numbers, setNumers] = useState([]);
     const [values, setValues] = useState([]);
     const [answer, setAnswer] = useState(0);
@@ -33,47 +34,140 @@ const Answer = () => {
             .catch((error) => {
                 console.error('Error fetching file:', error);
             });
+        fetch('days/01/correct.txt')
+            .then((response) => response.text())
+            .then((contents) => {
+                //split string by 'newline' into array of lines
+                setCorrect(contents.split('\n'));
+            })
+            .catch((error) => {
+                console.error('Error fetching file:', error);
+            });
     }, []);
 
     //extract numbers
     useEffect(() => {
-        function extractNumbers(data) {
+        const keywords = [
+            'one',
+            'two',
+            'three',
+            'four',
+            'five',
+            'six',
+            'seven',
+            'eight',
+            'nine',
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+        ];
+
+        function findKeywordsPositions(string, valuesArray) {
+            let positions = [];
+
+            for (let i = 0; i < valuesArray.length; i++) {
+                const value = valuesArray[i];
+                let index = string.indexOf(value);
+
+                while (index !== -1) {
+                    positions.push({ keyword: value, position: index });
+                    index = string.indexOf(value, index + 1);
+                }
+            }
+
+            // positions.sort((a, b) => a.position - b.position);
+            // positions.sort((a, b) => a.position - b.position);
+            return positions;
+        }
+
+        // function findKeywordsPositions(string, keywords) {
+        //     const positions = [];
+        //     const regex = new RegExp(keywords.join('|'), 'gi');
+        //     let match;
+
+        //     while ((match = regex.exec(string)) !== null) {
+        //         positions.push({ keyword: match[0], position: match.index });
+        //     }
+
+        //     //sort by position
+        //     positions.sort((a, b) => a.position - b.position);
+        //     return positions;
+        // }
+
+        function getNumbers(data, keywords) {
             const result = data.map((line) => {
-                return line.match(/\d/g);
+                const positions = findKeywordsPositions(line, keywords);
+                positions.sort((a, b) => a.position - b.position);
+                // console.log(positions);
+                return positions;
+                // return findKeywordsPositions(line, keywords);
             });
-            setNumers(result);
-
-            // for (let index = 0; index < 5; index++) {
-            //     console.log(data[index], array[index]);
-            // }
-
-            //
+            return result;
         }
 
         if (data.length !== 0) {
-            extractNumbers(data);
+            const result = getNumbers(data, keywords);
+            // console.log('setNumers', result.length);
+            setNumers(result);
         }
     }, [data]);
 
     //generate the special values for each line
     useEffect(() => {
+        //string to number conversion
+        const s2n = {
+            one: 1,
+            two: 2,
+            three: 3,
+            four: 4,
+            five: 5,
+            six: 6,
+            seven: 7,
+            eight: 8,
+            nine: 9,
+            0: 0,
+            1: 1,
+            2: 2,
+            3: 3,
+            4: 4,
+            5: 5,
+            6: 6,
+            7: 7,
+            8: 8,
+            9: 9,
+        };
+
         function combineNumbers(numbers) {
             const values = numbers.map((line) => {
-                if (line === null) {
-                    return null;
-                } else if (line.length === 1) {
-                    return `${line[0]}${line[0]}`;
-                } else {
-                    const firstItem = line[0];
-                    const lastItem = line[line.length - 1];
-                    return `${firstItem}${lastItem}`;
+                if (line !== undefined) {
+                    if (line === null || line.length === 0) {
+                        return null;
+                    } else if (line.length === 1) {
+                        const key = line[0].keyword;
+                        return `${s2n[key]}${s2n[key]}`;
+                    } else if (line.length > 1) {
+                        const firstItem = line[0].keyword;
+                        const lastItem = line[line.length - 1].keyword;
+                        return `${s2n[firstItem]}${s2n[lastItem]}`;
+                    } else {
+                        return null;
+                    }
                 }
             });
-            setValues(values);
+            return values;
         }
 
         if (numbers.length !== 0) {
-            combineNumbers(numbers);
+            const result = combineNumbers(numbers);
+            // console.log('setValues', result.length, result);
+            setValues(result);
         }
     }, [numbers]);
 
@@ -83,6 +177,7 @@ const Answer = () => {
             let result = 0;
             values.forEach((value) => {
                 if (value === null) {
+                    console.log('value was null');
                     return;
                 } else {
                     result += parseInt(value);
@@ -95,6 +190,20 @@ const Answer = () => {
             calculateAnswer(values);
         }
     }, [values]);
+
+    useEffect(() => {
+        if (correct.length > 0 && values.length > 0) {
+            for (let index = 0; index < correct.length; index++) {
+                const a = correct[index];
+                const b = values[index];
+                if (a !== b) {
+                    console.log(
+                        `index ${index}: correct: ${correct[index]} | values: ${values[index]}`
+                    );
+                }
+            }
+        }
+    }, [values, correct]);
 
     return (
         <section className="mt-4 flex w-full justify-center rounded-md  bg-green-800 p-4 align-middle text-gray-900 dark:text-white">
