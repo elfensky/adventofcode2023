@@ -18,9 +18,9 @@ const Home = () => {
     }, []);
 
     return (
-        <div>
+        <section className="w-full flex-grow overflow-auto rounded-md bg-gray-50 p-4 dark:bg-gray-800">
             <Markdown>{content}</Markdown>
-        </div>
+        </section>
     );
 };
 

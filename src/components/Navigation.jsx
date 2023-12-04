@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+//components
+import useWindowSize from './WindowSize';
 //flowbite
 import { Sidebar } from 'flowbite-react';
 //icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+    faHome,
+    faTree,
     fa0,
     fa1,
     fa2,
@@ -17,14 +21,20 @@ import {
     fa9,
 } from '@fortawesome/free-solid-svg-icons';
 
-const Navigation = ({ nav }) => {
-    const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+const Navigation = ({ nav, toggleNav }) => {
+    const [width, height] = useWindowSize();
 
-    // const [navOpen, setNavOpen] = useState(false);
+    useEffect(() => {
+        if (width > 1024) {
+            toggleNav(true);
+        } else {
+            toggleNav(false);
+        }
+    }, [width, height, toggleNav]);
 
     const SideBarStyle = {
         height: 'calc(100vh - 2rem)',
-        marginLeft: nav ? '0px' : 'calc(-250px - 1rem)',
+        marginLeft: nav ? '0px' : 'calc(-250px - 2rem)',
         transition: 'margin-left 0.123s ease-in-out',
         // Add any other styles you need
     };
@@ -32,43 +42,61 @@ const Navigation = ({ nav }) => {
     return (
         <Sidebar
             aria-label="sidebar with logo branding example"
-            className="w-[15%] min-w-[250px] overflow-clip rounded-lg"
+            className="fixed w-[16rem] min-w-[250px] overflow-hidden rounded-lg bg-red-500"
             style={SideBarStyle}
         >
-            <Sidebar.Logo href="#" img="logo.png" imgAlt="Unicode Xmas Tree">
+            <Sidebar.Logo
+                href="https://adventofcode.com"
+                className="flex items-center justify-center rounded-md bg-gray-300 p-4 dark:bg-gray-700"
+            >
+                <FontAwesomeIcon icon={faTree} className="mr-2" />
                 Advent of Code 2023
-                <br />
-                {nav ? 'OPEN' : 'CLOSED'}
             </Sidebar.Logo>
-            <Sidebar.Items className="overflow-auto p-4">
+
+            <Sidebar.Items className="flex-grow overflow-auto p-4 dark:bg-gray-800">
                 <Sidebar.ItemGroup>
-                    <Link to="/">
-                        <Sidebar.Item href="#">
-                            <span>
-                                {/* <FontAwesomeIcon icon={faEnvelope} /> */}
-                            </span>
-                            Home
-                        </Sidebar.Item>
-                    </Link>
-                    <Link to="/01">
-                        <Sidebar.Item href="#">
-                            <span className="space-x-[0.1rem]">
-                                <FontAwesomeIcon icon={fa0} />
-                                <FontAwesomeIcon icon={fa1} />
-                            </span>
-                            <span className="mx-1">-</span>
-                            Trebuchet?!
-                        </Sidebar.Item>
-                    </Link>
-                    <Link to="/02">
-                        <Sidebar.Item href="#">Day 02</Sidebar.Item>
-                    </Link>
-                    <Link to="/03">
-                        <Sidebar.Item href="#">Day 03</Sidebar.Item>
-                    </Link>
-                    <Link to="/04">
-                        <Sidebar.Item href="#">Day 04</Sidebar.Item>
-                    </Link>
+                    <Sidebar.Item as={Link} to="/">
+                        <span className="mr-2 space-x-[0.1rem]">
+                            <FontAwesomeIcon icon={faHome} />
+                        </span>
+                        Home
+                    </Sidebar.Item>
+
+                    <Sidebar.Item as={Link} to="/01">
+                        <span className="space-x-[0.1rem]">
+                            <FontAwesomeIcon icon={fa0} />
+                            <FontAwesomeIcon icon={fa1} />
+                        </span>
+                        <span className="mx-1">-</span>
+                        Trebuchet?!
+                    </Sidebar.Item>
+
+                    <Sidebar.Item as={Link} to="/02">
+                        <span className="space-x-[0.1rem]">
+                            <FontAwesomeIcon icon={fa0} />
+                            <FontAwesomeIcon icon={fa2} />
+                        </span>
+                        <span className="mx-1">-</span>
+                        Cube Conundrum
+                    </Sidebar.Item>
+
+                    <Sidebar.Item as={Link} to="/03">
+                        <span className="space-x-[0.1rem]">
+                            <FontAwesomeIcon icon={fa0} />
+                            <FontAwesomeIcon icon={fa3} />
+                        </span>
+                        <span className="mx-1">-</span>
+                        Gear Ratios
+                    </Sidebar.Item>
+
+                    <Sidebar.Item as={Link} to="/04">
+                        <span className="space-x-[0.1rem]">
+                            <FontAwesomeIcon icon={fa0} />
+                            <FontAwesomeIcon icon={fa4} />
+                        </span>
+                        <span className="mx-1">-</span>
+                        Unknown
+                    </Sidebar.Item>
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
         </Sidebar>

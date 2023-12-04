@@ -97,8 +97,8 @@ const Answer = () => {
     }, [values]);
 
     return (
-        <>
+        <section className="mt-4 flex w-full justify-center rounded-md  bg-green-800 p-4 align-middle text-gray-900 dark:text-white">
             <h3>Answer: {answer}</h3>
-        </>
+        </section>
     );
 };
