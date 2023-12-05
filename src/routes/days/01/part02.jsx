@@ -18,7 +18,6 @@ export default Day01Part01;
 //ANSWER
 const Answer = () => {
     const [data, setData] = useState([]);
-    const [correct, setCorrect] = useState([]);
     const [numbers, setNumers] = useState([]);
     const [values, setValues] = useState([]);
     const [answer, setAnswer] = useState(0);
@@ -30,15 +29,6 @@ const Answer = () => {
             .then((contents) => {
                 //split string by 'newline' into array of lines
                 setData(contents.split('\n'));
-            })
-            .catch((error) => {
-                console.error('Error fetching file:', error);
-            });
-        fetch('days/01/correct.txt')
-            .then((response) => response.text())
-            .then((contents) => {
-                //split string by 'newline' into array of lines
-                setCorrect(contents.split('\n'));
             })
             .catch((error) => {
                 console.error('Error fetching file:', error);
@@ -82,39 +72,19 @@ const Answer = () => {
                 }
             }
 
-            // positions.sort((a, b) => a.position - b.position);
-            // positions.sort((a, b) => a.position - b.position);
+            positions.sort((a, b) => a.position - b.position);
             return positions;
         }
 
-        // function findKeywordsPositions(string, keywords) {
-        //     const positions = [];
-        //     const regex = new RegExp(keywords.join('|'), 'gi');
-        //     let match;
-
-        //     while ((match = regex.exec(string)) !== null) {
-        //         positions.push({ keyword: match[0], position: match.index });
-        //     }
-
-        //     //sort by position
-        //     positions.sort((a, b) => a.position - b.position);
-        //     return positions;
-        // }
-
         function getNumbers(data, keywords) {
             const result = data.map((line) => {
-                const positions = findKeywordsPositions(line, keywords);
-                positions.sort((a, b) => a.position - b.position);
-                // console.log(positions);
-                return positions;
-                // return findKeywordsPositions(line, keywords);
+                return findKeywordsPositions(line, keywords);
             });
             return result;
         }
 
         if (data.length !== 0) {
             const result = getNumbers(data, keywords);
-            // console.log('setNumers', result.length);
             setNumers(result);
         }
     }, [data]);
@@ -190,20 +160,6 @@ const Answer = () => {
             calculateAnswer(values);
         }
     }, [values]);
-
-    useEffect(() => {
-        if (correct.length > 0 && values.length > 0) {
-            for (let index = 0; index < correct.length; index++) {
-                const a = correct[index];
-                const b = values[index];
-                if (a !== b) {
-                    console.log(
-                        `index ${index}: correct: ${correct[index]} | values: ${values[index]}`
-                    );
-                }
-            }
-        }
-    }, [values, correct]);
 
     return (
         <section className="mt-4 flex w-full justify-center rounded-md  bg-green-800 p-4 align-middle text-gray-900 dark:text-white">

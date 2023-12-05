@@ -2,12 +2,6 @@
 
 Steps:
 
-1. Read the file & split it into lines
-2. For each line, get the first and last integers
-3. Combine the integers into a two-digit number
-4. Add the two-digit number to a running total
-5. Print the running total
-
 ```js
 // 1. get the file contents and split it into an array of lines
 useEffect(() => {
