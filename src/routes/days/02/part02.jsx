@@ -5,10 +5,10 @@ import Content from '../../../components/Markdown'; // markdown
 const Part02 = () => {
     return (
         <section className="w-full flex-grow overflow-auto rounded-md bg-gray-50 p-4 dark:bg-gray-800">
-            <Content
+            {/* <Content
                 questionURL="days/01/02question.md"
                 solutionURL="days/01/02solution.md"
-            />
+            /> */}
             <Answer />
         </section>
     );

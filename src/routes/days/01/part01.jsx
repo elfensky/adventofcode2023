@@ -2,18 +2,18 @@
 import { useState, useEffect } from 'react';
 import Content from '../../../components/Markdown'; // markdown
 
-const Day01Part01 = () => {
+const Part01 = () => {
     return (
         <section className="w-full flex-grow overflow-auto rounded-md bg-gray-50 p-4 dark:bg-gray-800">
             <Content
-                questionURL="days/01/question1.md"
-                solutionURL="days/01/solution1.md"
+                questionURL="days/01/01question.md"
+                solutionURL="days/01/01solution.md"
             />
             <Answer />
         </section>
     );
 };
-export default Day01Part01;
+export default Part01;
 
 //ANSWER
 const Answer = () => {
@@ -24,7 +24,7 @@ const Answer = () => {
 
     //get file
     useEffect(() => {
-        fetch('days/01/data.txt')
+        fetch('days/01/input.txt')
             .then((response) => response.text())
             .then((contents) => {
                 //split string by 'newline' into array of lines

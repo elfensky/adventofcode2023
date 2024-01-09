@@ -9,6 +9,8 @@ import Toggle from './components/Toggle';
 //routes
 import Home from './routes/Home';
 import Day01 from './routes/days/01/01';
+import Day02 from './routes/days/02/02';
+// import Day04 from './routes/days/04/04';
 
 export default function App() {
     return (
@@ -35,6 +37,9 @@ export function Content() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/01" element={<Day01 />} />
+                    <Route path="/02" element={<Day02 />} />
+                    {/* <Route path="/03" element={<Day03 />} /> */}
+                    {/* <Route path="/04" element={<Day04 />} /> */}
                 </Routes>
             </section>
         </main>

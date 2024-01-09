@@ -1,7 +1,7 @@
 import Part01 from './part01';
 import Part02 from './part02';
 
-const Day01 = () => {
+const Day02 = () => {
     return (
         <>
             <Part01 />
@@ -10,4 +10,4 @@ const Day01 = () => {
     );
 };
 
-export default Day01;
+export default Day02;
